@@ -8,6 +8,7 @@ export default function TabLayout() {
         tabBarActiveTintColor: "black",
         tabBarShowLabel: false,
         tabBarHideOnKeyboard: true,
+        headerTitleStyle: { fontWeight: "bold" },
       }}
       sceneContainerStyle={{ backgroundColor: "white" }}
     >
@@ -21,7 +22,7 @@ export default function TabLayout() {
         }}
       />
       <Tabs.Screen
-        name="new"
+        name="create"
         options={{
           headerTitle: "Create Post",
           tabBarIcon: ({ color }) => (

@@ -1,5 +1,78 @@
-import { Text } from "react-native";
+import Avatar from "@/src/components/Avatar";
+import { Pressable, Text, TextInput, View } from "react-native";
+import * as ImagePicker from "expo-image-picker";
+import { useEffect, useState } from "react";
+import Button from "@/src/components/Button";
 
 export default function Profile() {
-  return <Text>Feed</Text>;
+  const [image, setImage] = useState<string | null>(null);
+  const [name, setName] = useState<string>("");
+  const [username, setUsername] = useState<string>("");
+  const [website, setWebsite] = useState<string>("");
+
+  useEffect(() => {}, []);
+
+  const pickImage = async () => {
+    let result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.Images,
+      allowsEditing: true,
+      aspect: [4, 3],
+      quality: 1,
+    });
+
+    console.log(result);
+
+    if (!result.canceled) {
+      setImage(result.assets[0].uri);
+    }
+  };
+  return (
+    <View className="flex-1 p-3">
+      {/* Avatar Image Picker */}
+      <View className="self-center">
+        {image ? (
+          <Avatar image_url={image} size={160} />
+        ) : (
+          <View className="size-40 bg-slate-300 rounded-full"></View>
+        )}
+
+        <Text
+          onPress={pickImage}
+          className="text-blue-500 font-semibold my-5 self-center"
+        >
+          Change
+        </Text>
+      </View>
+
+      {/* Update Form */}
+      <View className="gap-3 my-3">
+        <TextInput
+          placeholder="Name"
+          value={name}
+          onChangeText={(text) => setName(text)}
+          className="border border-gray-300 p-3 rounded-md"
+        />
+        <TextInput
+          placeholder="Username"
+          value={username}
+          onChangeText={(text) => setUsername(text)}
+          className="border border-gray-300 p-3 rounded-md"
+        />
+        <TextInput
+          placeholder="Website"
+          value={website}
+          onChangeText={(text) => setWebsite(text)}
+          className="border border-gray-300 p-3 rounded-md"
+        />
+      </View>
+
+      {/* Buttons */}
+      <View className="gap-3">
+        <Button title="Update" onPress={() => {}} />
+        <Pressable className="p-3">
+          <Text className="text-red-500 text-center">Logout</Text>
+        </Pressable>
+      </View>
+    </View>
+  );
 }
