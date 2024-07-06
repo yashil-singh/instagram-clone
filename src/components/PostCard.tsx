@@ -1,4 +1,4 @@
-import { Image, Text, useWindowDimensions, View } from "react-native";
+import { Text, View } from "react-native";
 import Avatar from "@/src/components/Avatar";
 import { AntDesign } from "@expo/vector-icons";
 import { Ionicons } from "@expo/vector-icons";
@@ -11,22 +11,22 @@ import { thumbnail } from "@cloudinary/url-gen/actions/resize";
 import { focusOn } from "@cloudinary/url-gen/qualifiers/gravity";
 import { FocusOn } from "@cloudinary/url-gen/qualifiers/focusOn";
 import { cld } from "@/src/lib/cloudinary";
+import { formatDistanceToNow } from "date-fns";
 
 type PostCardProps = {
   post: PostType;
 };
 
 export default function PostCard({ post }: PostCardProps) {
-  const { width } = useWindowDimensions();
-  const imageWidth = width.toFixed(0);
-
   const image = cld.image(post.image);
-  image.resize(thumbnail().width(imageWidth).height(imageWidth));
+  image.resize(thumbnail());
 
   const avatar = cld.image(post.user.avatar_url);
   avatar.resize(
     thumbnail().width(48).height(48).gravity(focusOn(FocusOn.face()))
   );
+
+  const date = formatDistanceToNow(new Date(post?.created_at));
 
   return (
     <View>
@@ -38,7 +38,7 @@ export default function PostCard({ post }: PostCardProps) {
       </View>
 
       {/* Image */}
-      <AdvancedImage cldImg={image} className="w-full aspect-[4/3]" />
+      <AdvancedImage cldImg={image} className="w-full aspect-square" />
       {/* <Image source={{ uri: post.image_url }} className="w-full aspect-[4/3]" /> */}
 
       {/* Post Actions */}
@@ -59,6 +59,7 @@ export default function PostCard({ post }: PostCardProps) {
           </Text>{" "}
           {post.caption}
         </Text>
+        <Text className="text-slate-500 text-sm">{date} ago</Text>
       </View>
     </View>
   );

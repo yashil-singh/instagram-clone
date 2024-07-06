@@ -13,7 +13,11 @@ export default function AuthLayout() {
       screenOptions={{
         headerShown: false,
         contentStyle: { backgroundColor: "white" },
+        animation: "ios",
       }}
-    />
+    >
+      <Stack.Screen name="index" />
+      <Stack.Screen name="signup" />
+    </Stack>
   );
 }

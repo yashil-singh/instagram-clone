@@ -1,4 +1,4 @@
-import { Pressable, Text } from "react-native";
+import { Pressable, Text, TouchableOpacity } from "react-native";
 
 type ButtonProps = {
   title: string;
@@ -9,7 +9,9 @@ type ButtonProps = {
 export default function Button({ title, onPress, disabled }: ButtonProps) {
   return (
     <Pressable
-      className="bg-blue-500 w-full p-3 items-center rounded-lg active:bg-blue-500/70"
+      className={`bg-blue-500 w-full p-3 items-center rounded-lg active:bg-blue-500/70 ${
+        disabled && "bg-blue-500/50"
+      }`}
       onPress={onPress}
       disabled={disabled}
     >

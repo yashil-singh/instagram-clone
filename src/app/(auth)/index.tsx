@@ -5,10 +5,12 @@ import {
   AppState,
   TextInput as RNTextInput,
   Text,
+  Image,
 } from "react-native";
 import { supabase } from "@/src/lib/supabase";
 import Button from "@/src/components/Button";
 import TextInput from "@/src/components/TextInput";
+import { Link } from "expo-router";
 
 AppState.addEventListener("change", (state) => {
   if (state === "active") {
@@ -53,12 +55,16 @@ export default function Auth() {
   }
 
   return (
-    <View className="flex-1 justify-center gap-8 p-3">
+    <View className="flex-1 justify-center gap-10 p-3">
+      <Image
+        source={require("@/assets/images/logo-color.png")}
+        className="size-20 mx-auto"
+      />
       <View className="gap-3">
         <TextInput
           onChange={(text) => setEmail(text)}
           value={email}
-          placeholder="email@address.com"
+          placeholder="Email Address"
           keyboardType="email-address"
           returnKeyType="next"
           onSubmitEditing={() => {
@@ -73,22 +79,24 @@ export default function Auth() {
           placeholder="Password"
           ref={passwordRef}
         />
+        <Link href="forgot-password" className="ml-auto">
+          <Text className="text-blue-500">Forgot Password?</Text>
+        </Link>
       </View>
 
       <View className="gap-3">
         <Button
-          title="Sign in"
+          title="Login"
           disabled={loading}
           onPress={() => signInWithEmail()}
         />
 
-        <Text className="text-center">or</Text>
-
-        <Button
-          title="Sign up"
-          disabled={loading}
-          onPress={() => signUpWithEmail()}
-        />
+        <Text className="text-center">
+          Don't have an account?{" "}
+          <Link href="/signup">
+            <Text className="text-blue-500">Sign up</Text>
+          </Link>
+        </Text>
       </View>
     </View>
   );

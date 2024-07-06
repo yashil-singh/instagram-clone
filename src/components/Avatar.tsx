@@ -1,4 +1,4 @@
-import { Image, View } from "react-native";
+import { Image, ImageBackground, View } from "react-native";
 
 type AvatarProps = {
   image_url: string;
@@ -7,12 +7,15 @@ type AvatarProps = {
 
 export default function Avatar({ image_url, size = 42 }: AvatarProps) {
   return (
-    <View>
+    <ImageBackground
+      className="rounded-full overflow-hidden"
+      source={require("@/assets/images/default.jpg")}
+      style={{ width: size, height: size }}
+    >
       <Image
         source={{ uri: image_url }}
         style={{ width: size, height: size }}
-        className="rounded-full"
       />
-    </View>
+    </ImageBackground>
   );
 }

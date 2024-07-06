@@ -9,8 +9,9 @@ export default function RootLayout() {
         screenOptions={{
           headerShown: false,
           contentStyle: {
-            backgroundColor: "#fff",
+            backgroundColor: "white",
           },
+          animation: "ios",
         }}
       />
     </AuthProvider>

@@ -3,6 +3,8 @@ import {
   TextInput as Input,
   KeyboardTypeOptions,
   ReturnKeyTypeOptions,
+  Text,
+  View,
 } from "react-native";
 
 type TextInputProps = {
@@ -32,19 +34,23 @@ const TextInput = forwardRef<Input, TextInputProps>(
     ref
   ) => {
     return (
-      <Input
-        value={value}
-        keyboardType={keyboardType}
-        onChangeText={onChange}
-        className="border border-gray-300 p-3 rounded-md"
-        placeholder={placeholder}
-        editable={editable}
-        secureTextEntry={isPassword}
-        autoCapitalize={"none"}
-        returnKeyType={returnKeyType}
-        ref={ref}
-        onSubmitEditing={onSubmitEditing}
-      />
+      <View className="relative border border-gray-300 px-4 pt-8 pb-3 rounded-xl">
+        <Text className="absolute left-4 top-3 text-gray-500">
+          {placeholder}
+        </Text>
+        <Input
+          value={value}
+          keyboardType={keyboardType}
+          onChangeText={onChange}
+          className=""
+          editable={editable}
+          secureTextEntry={isPassword}
+          autoCapitalize={"none"}
+          returnKeyType={returnKeyType}
+          ref={ref}
+          onSubmitEditing={onSubmitEditing}
+        />
+      </View>
     );
   }
 );

@@ -1,12 +1,11 @@
 import Avatar from "@/src/components/Avatar";
-import { Pressable, Text, View } from "react-native";
+import { Text, View } from "react-native";
 import * as ImagePicker from "expo-image-picker";
 import { useEffect, useState } from "react";
 import Button from "@/src/components/Button";
 import TextInput from "@/src/components/TextInput";
-import { supabase } from "@/src/lib/supabase";
 
-export default function Profile() {
+export default function EditProfile() {
   const [image, setImage] = useState<string | null>(null);
   const [name, setName] = useState<string>("");
   const [username, setUsername] = useState<string>("");
@@ -32,17 +31,13 @@ export default function Profile() {
     <View className="flex-1 p-3">
       {/* Avatar Image Picker */}
       <View className="self-center">
-        {image ? (
-          <Avatar image_url={image} size={160} />
-        ) : (
-          <View className="size-40 bg-slate-300 rounded-full"></View>
-        )}
+        <Avatar image_url={image ?? " "} size={160} />
 
         <Text
           onPress={pickImage}
           className="text-blue-500 font-semibold my-5 self-center"
         >
-          Change
+          Edit Picture
         </Text>
       </View>
 
@@ -66,11 +61,8 @@ export default function Profile() {
       </View>
 
       {/* Buttons */}
-      <View className="gap-3">
+      <View className="gap-3 mt-auto">
         <Button title="Update" onPress={() => {}} />
-        <Pressable className="p-3" onPress={() => supabase.auth.signOut()}>
-          <Text className="text-red-500 text-center">Logout</Text>
-        </Pressable>
       </View>
     </View>
   );

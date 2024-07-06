@@ -1,12 +1,17 @@
 import { useEffect, useState } from "react";
-import { Image, Text, TextInput, View } from "react-native";
+import { Alert, Image, Text, TextInput, View } from "react-native";
 import * as ImagePicker from "expo-image-picker";
 import Button from "@/src/components/Button";
 import { upload } from "cloudinary-react-native";
 import { cld, uploadImage } from "@/src/lib/cloudinary";
 import { UploadApiResponse } from "cloudinary-react-native/lib/typescript/src/api/upload/model/params/upload-params";
+import { supabase } from "@/src/lib/supabase";
+import { useAuth } from "@/src/providers/AuthProviders";
+import { router } from "expo-router";
 
 export default function CreatePost() {
+  const { session } = useAuth();
+
   const [caption, setCaption] = useState<string>("");
   const [image, setImage] = useState<string | null>(null);
 
@@ -20,7 +25,7 @@ export default function CreatePost() {
     let result = await ImagePicker.launchImageLibraryAsync({
       mediaTypes: ImagePicker.MediaTypeOptions.Images,
       allowsEditing: true,
-      aspect: [4, 3],
+      aspect: [1, 1],
       quality: 0.5,
     });
 
@@ -36,6 +41,20 @@ export default function CreatePost() {
     const response = await uploadImage({ file: image });
     if (response) {
       const public_id = response?.public_id;
+
+      const { data, error } = await supabase
+        .from("posts")
+        .insert([{ caption, image: public_id, user_id: session?.user.id }])
+        .select();
+
+      if (error) {
+        Alert.alert("Something went wrong.");
+        return;
+      }
+
+      setCaption("");
+      setImage(null);
+      router.push("/(tabs)");
     }
   };
 
