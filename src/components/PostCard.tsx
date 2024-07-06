@@ -32,8 +32,8 @@ export default function PostCard({ post }: PostCardProps) {
     <View>
       {/* Header */}
       <View className="flex-row items-center gap-2 px-3 py-2">
-        <AdvancedImage cldImg={avatar} className="size-12 rounded-full" />
-        {/* <Avatar image_url={post.user.avatar_url} /> */}
+        <AdvancedImage cldImg={avatar} className="size-10 rounded-full" />
+        {/* <Avatar image_url={post.user.image_url} /> */}
         <Text className="font-semibold">{post.user.username}</Text>
       </View>
 
